@@ -2,7 +2,7 @@
 title: "simulation testing in small circular graph - def fitness"
 author: "Bianca Brusco"
 date: "11/27/2017"
-output: html_document
+output: github_document
 ---
 
 ```{r setup, include=FALSE}
