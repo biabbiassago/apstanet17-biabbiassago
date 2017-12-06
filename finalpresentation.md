@@ -1,33 +1,35 @@
-An Introduction to the Evolution of Cooperation in Networks
+Intro to the Evolution of Cooperation in Networks
 ================
 Bianca Brusco bb1569
 12/5/2017
 
 A bit of background...
-============
+----------------------
 
-Why Evolutionary Game Theory?
------------------------------
+### Why Evolutionary Game Theory?
 
-Under Darwin's theory of Natural selection, evolution in a population is intended as the propagation of particular genes that increase the fitness of individuals in the population. Indeed, individuals who are more fit tend to produce more offspring, so that those genes that are proportionally more represented in the population.
+Under Darwin's theory of **Natural Selection**, evolution in a population is intended as the propagation of particular genes that increase the fitness of individuals in the population. Indeed, individuals who are more fit tend to produce more offspring, so that those genes are proportionally more represented in the population.
 
-Many behaviours that evolve in populations however, do not depend on the single gene of the single individual, but rather on how posessing a certain behavioural characteristic increases (or decreases) the individual's fitness in its interactions with other members of the population. As a consequence, the fitness brought by a gene ( or a set of genes) should not measured in isolation, but rather in the context of the entire population that the organism is part of.
+Many behaviours however, do not depend on the single gene of the single individual, but rather on how posessing a certain behavioural characteristic increases (or decreases) the individual's fitness in its interactions with other memebers of the population. As a consequence, the fitness brought by a gene ( or a set of genes) should not measured in isolation, but rather in the context of the entire population that the organism is part of.
 
-In particular, we examine the attribute "Cooperation". In this context, Cooperation is seen as a binary characteristic (either cooperator or defector) of an individual, rather than as a spectrum. We can intuitively see how Cooperation whose benefit depends on the characteristics of the population as a whole: if I am the only animal helping the population as a whole to be fed, I risk wasting a lot of energy gathering food that I will not eat, therefore decreasing my overall fitness for the benefit of my neighbours. However, if all my neighbours are cooperators, we can explore more food sources than a single individual, and as a whole, we are more likely to collect more food per individual that if we were to scavenge alone.
+In particular, we examine the attribute **"Cooperation"**. In this context, Cooperation is seen as a binary characteristic (either cooperator or defector) of an individual, rather than as a spectrum. We can intuitively see how the benefit of Cooperation depends on the charactersitcs of the population as a whole: if I am the only animal helping the population to feed itself, I risk wasting a lot of energy gathering food that I will not eat, therefore decreasing my overall fitness for the benefit of my neighbours. However, if all my neighbours are cooperators, we can explore more food sources than a single individual, and as a whole, we are more likely to collect more food per individual that if we were to scavange alone.
 
-The evolution of cooperation in animal populations has long been subject of investigation. The fact that some animal populations cooperate seems in some way opposes Darwin's Natural Selection theory: the genes of those who benefit from the help of others while not wasting any resources if not on themselves are most likely to be passed on, as those individuals are likely to be the fittest.
+The evolution of cooperation in animal populations has long been a subject of investigation. The fact that some animals cooperate intuitevely seems to oppose Darwin's Natural Selection theory: the genes of those who benefit from the help of others, while not wasting any resources if not on themseleves, are most likely to be passed on, as those individuals are likely to be the fittest.
 
-One important theory in evolutionary biology that reconciled the empirical observation was developed by Hamilton in 1957 (check can't remember exactly). Hamilton argued that individuals do not only want to benefit their own fitness, but rather the fitness of individuals who share their gene pool. For example, Hamilton's theory explained why some ants spend their lives helping the Queen ant rather than focusing on reproducing. Indeed, they share more genes with their sister (Queen ant), than with their potential offspring.
+One important theory in evolutionary biology, that reconciled the empirical observation with the theory of Natural Selection, was developed by Hamilton in 1957 (check can't remember exactly). Hamilton argued that individuals do not only want to benefit their own fitness, but rather the fitness of individuals who share their gene pool. For example, Hamilton's theory explained why some ants spend their lives helping the Queen ant rather than focusing on reproducing. Indeed, they share more genes with their sister (Queen ant), than with their potential offspring.
 
-In more recent years, however, the evolution of game theory has been examined through different lenses, taking a game theoretical approach. The interaction of members of a population can be seen has an "evolutionary game", in which there is a winning strategy, which not only depends on the two individual's fitness (or "payoff") but rather on the overall characteristics and fitness of the population.
+In more recent years, however, the evolution of cooperation has been examined through different lenses, taking a game theoretical approach. The interaction of members of a population can be seen has an "evolutionary game", in which there is a winning strategy, which not only depends on the two individual's fitness (or "payoff") but rather on the overall characteristics and fitness of the population.
 
-Why networks?
--------------
+### Why networks?
 
 Many evolutionary games have been modeled on fully connected population, in which all individuals interact with each other. However, this is not very representative of real population. Networks can be very valuable for the study of evolutionary games because they interaction and population structures more realistically.
 
-Testing Evolution of Cooperation
---------------------------------
+My project
+----------
+
+All the code used throughout to generate visualizations or results in this presentation is in apsta-net17/biabiassago repo.
+
+### Testing Evolution of Cooperation
 
 In this project, my initial aim was the results published by Outhsuki et al. in 2006. In the paper, the authors explore the evolution of cooperation in networks based on the number of neighbours that each node has. They prove that a necessary condition for cooperation to evolve is for the ratio of benefit of having cooperators as neighbours(b) over cost of helping them (c) to be larger than the number of neighbours (k). I.e $\\frac{b}{c}&gt; k$. This means: the less neighbours you interact with, the more you have to rely on them. And therefore, the more chances there are that you pick a cooperating strategy.
 
@@ -35,15 +37,18 @@ The authors test multiple cycles of simulation by introducing one single coopera
 
 They argue that if the cooperation attribute is neutral (i.e. it neither increases nor decreases fitness) then the probability of a single cooperator turning the enitre population into defectors (called "fixation probability") is of 1/N (with N, number of nodes). If the fixation probability of a single cooperator is greater than 1/N, then selection favors the emergence of cooperation.
 
-Therefore they study the fixation probability of cooperation attribute, by performing 10^6 simulations in each different settings (i.e. different values of benefit, cost and different types of networks). They then examine in how many of these simulations the cooperation attribute has fixated. They demonstrate that _b/c > k_ is a necessary condition (albeit not sufficient) for cooperation to be favoured by Natural Selection.
+Therefore they study the fixation probability of cooperation attribute, by performing 10^6 simulations in each different settings (i.e. different values of benefit, cost and different types of networks). They then examine in how many of these simulations the cooperation attribute has fixated. They demonstrate that $\\frac{b}{c}&gt; k$ is a necessary condition (albeit not sufficient) for cooperation to be favoured by Natural Selection.
 
 In this project, I do not have time not resources to run multiple 10^6 simulation for different conditions. Therefore, I decided to explore how networks can be used for evolutionary game theory games, by writing my own simulation, and building an interactive tool to visualize it.
 
-Moreover, I will ran 100 rounds of my simulations on different graphs, to see if the _b/c>k_ rule seems to hold.
+Moreover, I will ran 100 rounds of my simulations on different graphs, to see if the $\\frac{b}{c}&gt; k$ rule seems to hold.
 
 ``` r
 library(igraph)
 library(shiny)
+library(knitr)
+library(ggplot2)
+library(gridExtra)
 source("./functions.R")
 set.seed(1993)
 ```
@@ -51,22 +56,22 @@ set.seed(1993)
 Developing the simulation
 -------------------------
 
-See file functions.R for code.
-
 To develop this simulation I wrote several functions that I describe below. The code can be found in this repository in functions.R.
 
 -   assignType() : this function picks a random individual in the network an assignes it the attribute of cooperator "C", and it assignes "D", defector, to all others.
 
 -   assignColor() : for visualization purposes. Assignes vertex color red to defectors and blue to cooperators.
 -   nodeFit() : this function assigns "fitness" to each node. This characterstic is based on whether the node is a cooperator or a defector, and on the charactersitics of its neighbours. Specifically,
+
 	
 	__Fitness__ = 1- w- (benf*i - cost*k)*w. 
 	benf = benefit gained from being neighbour to some cooperators
 	cost = cost lost from helping neighbours by being a cooperators.
 	i = number of cooperatoring neighbours
 	k = number of neighbours.
-	w : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection (the fitness increase from one
-	attribute rather than the other is small, in which case w&lt;&lt;1).
+	w : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection 	(the fitness increase from one
+	attribute rather than the other is small, in which case w<<1).
+
 
 -   netFit() : assign fitness to whole network, node by node.
 
@@ -95,21 +100,18 @@ In the image below, we can visualize the death-Birth update in a network that st
 
 ![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/example.gif)
 
-What is happening? Visualizing in a Shiny App
----------------------------------------------
+### What is happening? Visualizing in a Shiny App
 
-In this Shiny App, we analyze the netUpdate function in different networks with 20 nodes each.
+In this Shiny App, we explore the netUpdate() function in different networks with 20 nodes each.
 
-link to app: https://biabbiassago.shinyapps.io/cooperationsim/
+link to app: <https://biabbiassago.shinyapps.io/cooperationsim/>
 
 Screenshot for github document: ![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/appscreenshot.png)
-
-The code to create the app is in the files server.R and ui.R in this directory.
 
 Simulations on bigger networks
 ------------------------------
 
-I then plan to test the simulations on larger networks, with 100 nodes, and examine the distribution in Since these simulations are computationally heave and require around 1h each, in the interest of time, I present here the results only for the Cycle. I test underd conditions of *b*/*c* &gt; *k* and *b*/*c* &lt; *k*
+I then plan to test the simulations on larger networks, with 100 nodes, and examine the distribution in Since these simulations are computationally heave and require around 1h each, in the interest of time, I present here the results only for the Cycle. I test under conditions of b/c>k and b/c<k
 
 ### On circle k = 2
 
@@ -133,29 +135,97 @@ sampleCircle2 = netFit(sampleCircle2,benf = benf_2,cost =cost_2)
 ```
 
 ``` r
-#TO CACHE
+#100 simulations
 fracCircle_1 = simDistCoop(sampleCircle,benf = benf_1, cost = cost_1,100,500)
 fracCircle_2 = simDistCoop(sampleCircle2,benf= benf_2, cost = cost_2, 100, 500)
+
+z.test(mean(fracCircle_1), mean(fracCircle_2), alternative = "greater",mu = 0)
+ confIntCircle_1= c(mean(fracCircle_1)-1.96*sd(fracCircle_1)/sqrt(n),mean(fracCircle_1)+1.96*sd(fracCircle_1)/sqrt(n))
+ confIntCircle_2 =c(mean(fracCircle_2)-1.96*sd(fracCircle_2)/sqrt(n),mean(fracCircle_2)+1.96*sd(fracCircle_2)/sqrt(n))
+ 
 par(mfrow = c(1,2))
-hist(fracCircle_1,freq = F)
-hist(fracCircle_2, freq = F)
+histCircle1 = qplot(fracCircle_1,bins = 30, main="Fraction of Cooperators in 100 Simulations, b/c=20",xlab="fraction of Cooperators",geom="histogram") + theme_minimal()
+histCircle2 = qplot(fracCircle_2,bins = 30, main="Fraction of Cooperators in 100 Simulations, b/c=1",xlab="fraction of Cooperators",geom="histogram") + theme_minimal()
+
+grid.arrange(histCircle1,histCircle2)
 ```
 
-![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/histCircles.png)
+![histsC](images/histCircles.png)
 
-From these histograms, we don't really see a difference between the distribution of percentage of cooperators in the two cases. I plan to test what happens under strong selection to observe the results.
+Although the histograms appear to be very similar, we can test for difference in mean percentage of cooperators. We obtain that the mean percentage of cooperators in the simulated networks is statistically larger when the benefit/cost ratio is larger (non overlapping 95% confidence intervals).
+
+``` r
+#values are hard coded cause I don't have time to re-run simulation in creating markdown.
+# but i want pretty table :)
+
+lower = c(0.111,0.091)
+mean = c(0.120,0.098)
+upper = c(0.129,0.105)
+
+resultsCircle = data.frame(lower,mean,upper) 
+colnames(resultsCircle) = c("95% CI lower bound","mean","95% CI upper bound")
+rownames(resultsCircle) = c("b/c = 20", "b/c = 1")
+kable(resultsCircle, caption= "Comparison of mean % of cooperators for different benefit-cost ratios")
+```
+
+|          |  95% CI lower bound|   mean|  95% CI upper bound|
+|----------|-------------------:|------:|-------------------:|
+| b/c = 20 |               0.111|  0.120|               0.129|
+| b/c = 1  |               0.091|  0.098|               0.105|
 
 ### On Lattice k =4
 
 Repeat simulation 100 (or 1000 times)
 2histograms (b/c &lt; k , b/c &gt;k)
 
-### On regular k = 10
+``` r
+#for benefit/cost > k =2
+sampleLattice = make_lattice(n/10,n/10, directed=FALSE)
+sampleLattice = assignType(sampleLattice)
+sampleLattice = assignColor(sampleLattice)
+sampleLattice = netFit(sampleLattice,benf = benf_1,cost =cost_1)
+
+#for benefit/cost < k =2
+benf_2 = 1
+cost_2 = 1
+sampleLattice2 = make_ring(n, directed=FALSE)
+sampleLattice2 = assignType(sampleLattice2)
+sampleLattice2 = assignColor(sampleLattice2)
+sampleLattice2 = netFit(sampleLattice2,benf = benf_2,cost =cost_2)
+
+fracLattice_1 = simDistCoop(sampleLattice,benf = benf_1, cost = cost_1,100,500)
+fracLattice_2 = simDistCoop(sampleLattice2,benf= benf_2, cost = cost_2, 100, 500)
+par(mfrow = c(1,2))
+hist(fracLattice_1, freq = F)
+hist(fracLattice_2, freq = F)
+```
+
+### On scale Free (represents populations well)
 
 Repeat simulation 100 (or 1000 times)
 2histogram (b/c &lt; k , b/c &gt;k)
 
-### On scale Free (represents populations well)
+``` r
+#for benefit/cost > k =2
+sampleScale = barabasi.game(n, directed = F)
+sampleScale = assignType(sampleScale)
+sampleScale = netFit(sampleScale,benf = benf_1, cost= cost_1,100,500)
+
+
+#for benefit/cost < k =2
+sampleScale2 = barabasi.game(n, directed = F)
+sampleScale2 = assignType(sampleScale2)
+sampleScale2 = netFit(sampleScale2,benf = benf_2, cost= cost_2,100,500)
+
+fracSale_1 = simDistCoop(sampleScale, benf = benf_1, cost = cost_1, 100,500)
+fracSale_2 = simDistCoop(sampleScale, benf = benf_1, cost = cost_1, 100,500)
+
+par(mfrow = c(1,2))
+hist(fracScale_1, freq = F)
+hist(fracScale_2, freq = F)
+```
+
+### On regular k = 10
 
 Repeat simulation 100 (or 1000 times)
 2histogram (b/c &lt; k , b/c &gt;k)
@@ -164,14 +234,13 @@ Repeat simulation 100 (or 1000 times)
 
 Most evolutionary game-theory simulations are theoretical networks. Here we examine what happens if we run the simulation on the sampson's monk network.
 
-Repeat simulation 100 (or 1000 times)
-2histogram (b/c &lt; k , b/c &gt;k)
-
 Challenges and future work:
 ---------------------------
 
 -   Need to work on lattice simulation because all nodes now have same probability right now
--   To get a similar result to the paper would need to run a lot more times.
+-   Create distributions for all different networks and observe conclusions.
+-   To get a similar result to the paper would need to run a lot more times
+-   What happens under strong selection conditions?
 
 References
 ----------
