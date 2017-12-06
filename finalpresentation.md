@@ -265,10 +265,8 @@ Most evolutionary game-theory simulations are theoretical networks. Here we exam
 Challenges and future work:
 ---------------------------
 
--   Need to work on lattice simulation because all nodes now have same probability right now
 -   Create distributions for all different networks and observe conclusions.
--   To get a similar result to the paper would need to run a lot more times
--   What happens under strong selection conditions?
+-   To get a similar result to the paper would need to run a lot more times (how?)
 -   How does the centrality measure of the starting cooperator affect the simulations?
 -   What happens under strong selection conditions?
 
