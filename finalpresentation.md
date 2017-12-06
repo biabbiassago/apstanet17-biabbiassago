@@ -269,6 +269,7 @@ Challenges and future work:
 -   To get a similar result to the paper would need to run a lot more times (how?)
 -   How does the centrality measure of the starting cooperator affect the simulations?
 -   What happens under strong selection conditions?
+-   The project initially was motivated by the fact that most of these simulations are run on "artificial" graphs rather than using empirical network data. Thererefore, I want to test my simulation on the Sampson's monk network, or the AddHealth network data.
 
 References
 ----------
