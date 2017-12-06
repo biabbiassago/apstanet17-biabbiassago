@@ -1,6 +1,6 @@
 ### APSTANET 17 Final Project
-Bianca Brusco bb1569
-================================
+__Bianca Brusco bb1569__
+
 
 # Using Networks to study the Evolution of Cooperation
 
@@ -32,8 +32,10 @@ Test how benefit/cost ratio and number of neighbours of the nodes affects how co
 	
 __Other files in this folder__
 
-- proppresentation.pdf = presentation with initial project proposal.   
-- finalpresentation.md =final markdown file presenting project's results (and changes). 
+Files used for prenstation of the project. The final presentation includes background on the topic that might be helpful to readers with no previous knowledge of evolutionary game theory.   
+
+	- proppresentation.pdf = presentation with initial project proposal.   
+	- finalpresentation.md =final markdown file presenting project's results (and changes). 
 
 
 	
