@@ -110,7 +110,7 @@ The code to create the app is in the files server.R and ui.R in this directory.
 
 ### Simulations on bigger networks
 
-I then plan to test the simulations on larger networks, with 100 nodes, and examine the distribution in Since these simulations are computationally heave and require around 1h each, in the interest of time, I present here the results only for the Cycle. I test under conditions of *b*/*c* &gt; *k* and *b*/*c* &lt; *k*
+I then plan to test the simulations on larger networks, with 100 nodes, and examine the distribution in Since these simulations are computationally heave and require around 1h each, in the interest of time, I present here the results only for the Cycle. I test under conditions of b/c > k and b/c < k
 
 #### On circle k = 2
 
