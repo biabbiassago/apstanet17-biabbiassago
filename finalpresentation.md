@@ -57,25 +57,26 @@ set.seed(1993)
 
 To develop this simulation I wrote several functions that I describe below. The code can be found in this repository in functions.R.
 
--   assignType() : this function picks a random individual in the network an assignes it the attribute of cooperator "C", and it assignes "D", defector, to all others.
+-   __assignType()__ : this function picks a random individual in the network an assignes it the attribute of cooperator "C", and it assignes "D", defector, to all others.
 
--   assignColor() : for visualization purposes. Assignes vertex color red to defectors and blue to cooperators.
--   nodeFit() : this function assigns "fitness" to each node. This characterstic is based on whether the node is a cooperator or a defector, and on the charactersitics of its neighbours. Specifically,
+-   __assignColor()__ : for visualization purposes. Assignes vertex color red to defectors and blue to cooperators.
+-   __nodeFit()__ : this function assigns "fitness" to each node. This characterstic is based on whether the node is a cooperator or a defector, and on the charactersitics of its neighbours. Specifically,
 	
-	__Fitness__ = 1- w- (benf*i - cost*k)*w.   
-	__benf__ = benefit gained from being neighbour to some cooperators.   
-	__cost__ = cost lost from helping neighbours by being a cooperators.   
-	__i__ = number of cooperatoring neighbours. 
-	__k__ = number of neighbours.  
-	__w__ : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection 	(the fitness increase from one
+	_Fitness_ = 1- w- (benf * i - cost * k) * w , where:  
+	  
+	_benf_ = benefit gained from being neighbour to some cooperators.   
+	_cost_ = cost lost from helping neighbours by being a cooperators.   
+	_i_ = number of cooperatoring neighbours. 
+	_k_ = number of neighbours.  
+	_w_ : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection 	(the fitness increase from one
 	attribute rather than the other is small, in which case w<<1).  	
 
 
--   netFit() : assign fitness to whole network, node by node.
+-   __netFit()__ : assign fitness to whole network, node by node.
 
--   deathBirth() : death Birth updating for one node. See below for more on death Birth Updating.
--   netUpdate() : death birth through whole network
--   simDistCoop() : this function simulates deathBirth for the whole network multiple times. It then calculates, for each simulation, the percentage of cooperators at the end of the evolutionary process. It returns an array with percentage of cooperators in each of the simulations.
+-   __deathBirth()__ : death Birth updating for one node. See below for more on death Birth Updating.
+-   __netUpdate()__ : death birth through whole network
+-   __simDistCoop()__ : this function simulates deathBirth for the whole network multiple times. It then calculates, for each simulation, the percentage of cooperators at the end of the evolutionary process. It returns an array with percentage of cooperators in each of the simulations.
 
 ### The process : Death-Birth updating
 
@@ -83,13 +84,13 @@ To simulate evolution of a population, I developed a simulation to replicate a D
 
 In this case, I define the probability of a cooperator winning to be:
 
-Pc = F_c/(F\_c + F\_d)
+_Pc = F_c/(F\_c + F\_d)_
 
 as defined in Outhsuki et al. (2006).
 where:
 
-F_c : fitness of neighbouring cooperators
-F_d : fitness of neighbouring defectors
+_F_c_ : fitness of neighbouring cooperators
+_F_d_ : fitness of neighbouring defectors
 
 I conducted this preliminary investigations under weak selection, as advised in Outhsuki et al. (2006), although it would be interesting to examine the strong selection case.
 
