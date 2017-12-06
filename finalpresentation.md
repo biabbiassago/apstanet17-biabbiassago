@@ -63,11 +63,11 @@ To develop this simulation I wrote several functions that I describe below. The 
 -   nodeFit() : this function assigns "fitness" to each node. This characterstic is based on whether the node is a cooperator or a defector, and on the charactersitics of its neighbours. Specifically,
 	
 	__Fitness__ = 1- w- (benf*i - cost*k)*w.   
-	benf = benefit gained from being neighbour to some cooperators. 
-	cost = cost lost from helping neighbours by being a cooperators.   
-	i = number of cooperatoring neighbours. 
-	k = number of neighbours.  
-	w : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection 	(the fitness increase from one
+	__benf__ = benefit gained from being neighbour to some cooperators.   
+	__cost__ = cost lost from helping neighbours by being a cooperators.   
+	__i__ = number of cooperatoring neighbours. 
+	__k__ = number of neighbours.  
+	__w__ : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection 	(the fitness increase from one
 	attribute rather than the other is small, in which case w<<1).  	
 
 
