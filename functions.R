@@ -1,4 +1,3 @@
-
 assignType = function(net){
   
   ## This function assigns type attribute - cooperator or defector
@@ -41,13 +40,13 @@ assignColor = function(net){
   }  
   else{
     V(net)$color = V(net)$type
-    V(net)$color=gsub("C","steel blue",V(net)$color)
-    V(net)$color=gsub("D","indian red",V(net)$color)
-    V(net)$color= gsum("U", "grey", V(net)$color)
+    V(net)$color = gsub("C","steel blue",V(net)$color)
+    V(net)$color = gsub("D","indian red",V(net)$color)
+    V(net)$color = gsub("U", "grey", V(net)$color)
     return(net)
   }
 }
-nodeFit = function(net,v, benf = 100, cost = 1, w = 0.1){
+nodeFit = function(net,v, benf, cost, w = 0.1){
   ## this function defines fitness for a given node v in a network
   ## @net = igraph network 
   ## @v = node to assign fitness to 
@@ -84,7 +83,7 @@ nodeFit = function(net,v, benf = 100, cost = 1, w = 0.1){
     return(fit)
   }
 }
-netFit = function(net,benf = 100, cost = 1, w = 0.1){
+netFit = function(net, benf, cost, w = 0.1){
   
   ## this function defines fitness for a network
   ## @net = igraph network 
@@ -110,11 +109,12 @@ netFit = function(net,benf = 100, cost = 1, w = 0.1){
     return(net)
   }
 }  
-deathBirth = function(net){
+deathBirth = function(net,benf, cost, w=0.1){
   ## Death Birth (one round) process as defined in Othsuki et al. 2006.
   ## One node at random "dies" and his neighbours 
   ## (cooperators or defectors) compete based on fitness
   ## @net= igraph network 
+  ## @benf - benefit of
   ## returns net with updated type
   
   n = vcount(net)
@@ -138,23 +138,34 @@ deathBirth = function(net){
     }
   }
   
+  
+  
   p = fc/(fc+fd)
   
   #cheap fix... non capisco bene cosa ci sia che non funziona
-  if(p < 0){
-    p = 0
-  }
-  else if(p>1){
-    p = 1
-  }
   
+  # HERE I allow for random mutation of cooperator. That is even if no neighours are cooperators, 
+  #one still has a 1% probability of becoming it. 
+  if(p<=0){
+    p = 0.1
+  }
+  else if(p>=1){
+    #allow for random mutation of defectors as well.
+    p = 0.9
+  }
   #assign based on prob
   V(net)$type[dead] = sample(c("C","D"), size=1, prob=c(p,1-p))
-  V(net)$fitness[dead] = nodeFit(net, dead)
-  return(net)
   
+  V(net)$fitness[dead] = nodeFit(net,dead,benf, cost, w) #reassign fitness to whole network.
+  #Can make it faster by only assigning it to dead and neighbours. 
+  for( count in 1:length(i)){
+    V(net)$fitness[i[count]] = nodeFit(net,i[count],benf,cost)
+  }
+  
+  return(net)
+
 }
-netUpdate = function(net,rounds = 100){
+netUpdate = function(net,benf, cost, w=0.1,rounds = 100){
   
   ## simulates network update based on Death Birth process
   ## @net = igraph network
@@ -163,12 +174,12 @@ netUpdate = function(net,rounds = 100){
   
   s = 1
   while(s<rounds){
-    net = deathBirth(net)
+    net = deathBirth(net,benf, cost)
     s = s +1
   }
   return(net)
 }
-simDistCoop = function(net,sims = 100, rounds = 100) {
+simDistCoop = function(net,benf, cost, w = 0.1 , sims = 100, rounds = 100) {
   ## performs multiple netUpdate simulations -- network update based on Death-Birth process 
   ## @net = igraph network object.
   ## @sims = number of netUpdate simualtions to perform. Deafult = 100
@@ -179,7 +190,7 @@ simDistCoop = function(net,sims = 100, rounds = 100) {
   reps = 0
   frac = c()
   while(reps<sims){
-    netUp = netUpdate(net,rounds)
+    netUp = netUpdate(net,rounds,benf,cost,rounds)
     f = sum(V(netUp)$type == "C")/n
     frac = c(f,frac)
     reps = reps + 1
@@ -187,9 +198,9 @@ simDistCoop = function(net,sims = 100, rounds = 100) {
   return(frac)
 }
 
-
-
 # ### my functions ###
+# assignType()    - 
+# assignTypeMult()
 # assignColor()   - blue cooperators and red defectors
 # nodeFit()       - assign fitness based on neighbouring cooperators and defectors
 # netFit()        - assign fitness to whole network
