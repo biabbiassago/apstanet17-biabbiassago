@@ -84,12 +84,12 @@ To simulate evolution of a population, I developed a simulation to replicate a D
 
 In this case, I define the probability of a cooperator winning to be:
 
-_Pc = F_c/(F\_c + F\_d)_
+_Pc = F_c/(F_c + F_d)__
 
 as defined in Outhsuki et al. (2006).
 where:
 
-_F_c_ : fitness of neighbouring cooperators
+_F_c_ : fitness of neighbouring cooperators   
 _F_d_ : fitness of neighbouring defectors
 
 I conducted this preliminary investigations under weak selection, as advised in Outhsuki et al. (2006), although it would be interesting to examine the strong selection case.
