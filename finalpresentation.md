@@ -3,7 +3,7 @@ An Introduction to the Evolution of Cooperation in Networks
 Bianca Brusco bb1569
 12/5/2017
 
-Introduction
+A bit of background...
 ============
 
 Why Evolutionary Game Theory?
@@ -100,7 +100,7 @@ What is happening? Visualizing in a Shiny App
 
 In this Shiny App, we analyze the netUpdate function in different networks with 20 nodes each.
 
-link to app:
+link to app: https://biabbiassago.shinyapps.io/cooperationsim/
 
 Screenshot for github document: ![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/appscreenshot.png)
 
