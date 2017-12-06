@@ -101,7 +101,7 @@ In the image below, we can visualize the death-Birth update in a network that st
 
 In this Shiny App, we explore the netUpdate() function in different networks with 20 nodes each. User can define benefit and cost, and chose among 4 different sample networks.
 
-link to app: <https://biabbiassago.shinyapps.io/cooperationsim/>
+link to app: <https://biabbiassago.shinyapps.io/finalProject/>
 
 Screenshot for github document: ![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/appscreenshot.png)
 
