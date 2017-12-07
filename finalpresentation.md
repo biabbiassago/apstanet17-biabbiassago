@@ -61,15 +61,14 @@ To develop this simulation I wrote several functions that I describe below. The 
 
 -   assignColor() : for visualization purposes. Assignes vertex color red to defectors and blue to cooperators.
 -   nodeFit() : this function assigns "fitness" to each node. This characterstic is based on whether the node is a cooperator or a defector, and on the charactersitics of its neighbours. Specifically,
-	
-	__Fitness__ = 1- w- (benf*i - cost*k)*w.   
-	__benf__ = benefit gained from being neighbour to some cooperators.   
-	__cost__ = cost lost from helping neighbours by being a cooperators.   
-	__i__ = number of cooperatoring neighbours. 
-	__k__ = number of neighbours.  
-	__w__ : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection 	(the fitness increase from one
-	attribute rather than the other is small, in which case w<<1).  	
 
+    *F**i**t**n**e**s**s* = 1 − *w* − (*b**e**n**f* × *i* − *c**o**s**t* × *k*)\**w* where:
+
+    *b**e**n**f* = benefit gained from being neighbour to some cooperators
+    *c**o**s**t* = cost lost from helping neighbours by being a cooperators.
+    *i* = number of cooperatoring neighbours
+    *k* = number of neighbours.
+    *w* : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection (the fitness increase from one attribute rather than the other is small, in which case w&lt;&lt;1).
 
 -   netFit() : assign fitness to whole network, node by node.
 
@@ -83,27 +82,24 @@ To simulate evolution of a population, I developed a simulation to replicate a D
 
 In this case, I define the probability of a cooperator winning to be:
 
-Pc = F_c/(F\_c + F\_d)
+$Pc = (\\frac{F\_c}{F\_c + F\_d})$
 
 as defined in Outhsuki et al. (2006).
-where:
 
-F_c : fitness of neighbouring cooperators
-F_d : fitness of neighbouring defectors
+*F*<sub>*c*</sub> : fitness of neighbouring cooperators
+*F*<sub>*d*</sub> : fitness of neighbouring defectors
 
 I conducted this preliminary investigations under weak selection, as advised in Outhsuki et al. (2006), although it would be interesting to examine the strong selection case.
 
 In the image below, we can visualize the death-Birth update in a network that starts with 6 cooperators and 4 defectors, and eventually turns in a full-cooperators population.
 
-![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/example.gif)
+![image](images/example.gif)
 
 #### What is happening? Visualizing in a Shiny App
 
 In this Shiny App, we explore the netUpdate() function in different networks with 20 nodes each. User can define benefit and cost, and chose among 4 different sample networks.
 
 link to app: <https://biabbiassago.shinyapps.io/cooperationsim/>
-
-Screenshot for github document: ![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/appscreenshot.png)
 
 The code to create the app is in the files server.R and ui.R in this directory.
 
@@ -148,7 +144,7 @@ histCircle2 = qplot(fracCircle_2,bins = 30, main="Fraction of Cooperators in 100
 grid.arrange(histCircle1,histCircle2)
 ```
 
-![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/histCircles.png)
+![histsC](images/histCircles.png)
 
 Although the histograms appear to be very similar, we can test for difference in mean percentage of cooperators. We obtain that the mean percentage of cooperators in the simulated networks is statistically larger when the benefit/cost ratio is larger (non overlapping 95% confidence intervals).
 
@@ -212,7 +208,7 @@ plotScale3 = plot(sampleScale2,layout= lay, vertex.label=NA, main = "b/c = 1 , b
 plotScale4 = plot(sampleScale2,layout= lay, vertex.label=NA, main = "b/c = 1 , after")
 ```
 
-![](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/scalePlot.png))
+![](images/scalePlot.png)
 
 **Further work to finish**
 
@@ -255,7 +251,7 @@ hist(fracLattice_2, freq = F)
 #### On regular k = 10
 
 Repeat simulation 100 (or 1000 times)
-2histogram (b/c > k , b/c < k)
+2histogram (b/c &lt; k , b/c &gt;k)
 
 #### On monk network: smaller real network
 
