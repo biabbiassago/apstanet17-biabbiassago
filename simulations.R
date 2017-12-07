@@ -68,12 +68,12 @@ hist(fracLattice_2, freq = F)
 
 #for benefit/cost > k =2
 sampleScale = barabasi.game(n, directed = F)
+sampleScale2 = sampleScale
 sampleScale = assignType(sampleScale)
 sampleScale = netFit(sampleScale,benf = benf_1, cost= cost_1,100,500)
 
 
 #for benefit/cost < k =2
-sampleScale2 = barabasi.game(n, directed = F)
 sampleScale2 = assignType(sampleScale2)
 sampleScale2 = netFit(sampleScale2,benf = benf_2, cost= cost_2,100,500)
 
@@ -85,11 +85,3 @@ hist(fracScale_1, freq = F)
 hist(fracScale_2, freq = F)
 
 ##############################################
-
-
-
-
-
-
-
-

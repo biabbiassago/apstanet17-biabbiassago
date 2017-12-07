@@ -121,7 +121,7 @@ deathBirth = function(net,benf, cost, w=0.1){
   
   #death = no fitness
   dead = sample(1:n,1)
-  V(net)$type[dead] = "U"
+  #V(net)$type[dead] = "U"
   
   #birth
   
@@ -131,15 +131,13 @@ deathBirth = function(net,benf, cost, w=0.1){
   i = neighbors(net,dead)
   for( count in 1:length(i)){
     if(neighbors(net,dead)[count]$type == "C"){
-      fc = fc + as.numeric(V(net)[i[count]]$fitness)
+      fc = fc + as.numeric(V(net)$fitness[i[count]])
     }
     if(neighbors(net,dead)[count]$type == "D"){
-      fd = fd + as.numeric(V(net)[i[count]]$fitness)
+      fd = fd + as.numeric(V(net)$fitness[i[count]])
     }
   }
-  
-  
-  
+ 
   p = fc/(fc+fd)
   
   #cheap fix... non capisco bene cosa ci sia che non funziona
@@ -174,7 +172,7 @@ netUpdate = function(net,benf, cost, w=0.1,rounds = 100){
   
   s = 1
   while(s<rounds){
-    net = deathBirth(net,benf, cost)
+    net = deathBirth(net,benf,cost)
     s = s +1
   }
   return(net)
@@ -197,7 +195,6 @@ simDistCoop = function(net,benf, cost, w = 0.1 , sims = 100, rounds = 100) {
   }
   return(frac)
 }
-
 # ### my functions ###
 # assignType()    - 
 # assignTypeMult()

@@ -2,6 +2,7 @@ library(shiny)
 library(igraph)
 source("./functions.R")
 
+#using simulation functions create app to simulate the netUpdate() process as defined in functions.R
 
 # load data
 n = 20
@@ -34,7 +35,7 @@ shinyServer(
   output$networkBefore = renderPlot({
       netBefore = netChoice()
       lay=layout.fruchterman.reingold(netBefore)
-      plot(netBefore, main = "Network Before Death-Birth")
+      plot(netBefore, main = "Network Before Death-Birth",vertex.label=NA, layout=lay)
       
     })
     output$networkAfter = renderPlot({
@@ -44,10 +45,10 @@ shinyServer(
       c = input$cost
       lay=layout.fruchterman.reingold(netBefore)
       netBefore = netFit(netBefore, benf = b, cost = c)
-      netAfter = netUpdate(netBefore,15)
+      netAfter = netUpdate(netBefore,benf=b, cost=c, 30)
       netAfter = assignColor(netAfter)
       
-      plot(netAfter, main = "Network After Death-Birth")
+      plot(netAfter, main = "Network After Death-Birth", vertex.label=NA, layout=lay)
       
     })
 

@@ -37,7 +37,7 @@ The authors test multiple cycles of simulation by introducing one single coopera
 
 They argue that if the cooperation attribute is neutral (i.e. it neither increases nor decreases fitness) then the probability of a single cooperator turning the enitre population into defectors (called "fixation probability") is of 1/N (with N, number of nodes). If the fixation probability of a single cooperator is greater than 1/N, then selection favors the emergence of cooperation.
 
-Therefore they study the fixation probability of cooperation attribute, by performing 10^6 simulations in each different settings (i.e. different values of benefit, cost and different types of networks). They then examine in how many of these simulations the cooperation attribute has fixated. They demonstrate that $\\frac{b}{c}&gt; k$ is a necessary condition (albeit not sufficient) for cooperation to be favoured by natural selection.
+Therefore they study the fixation probability of cooperation attribute, by performing 10^6 simulations in each different settings (i.e. different values of benefit, cost and different types of networks). They then examine in how many of these simulations the cooperation attribute has fixated. They demonstrate that _b/c > k_  is a necessary condition (albeit not sufficient) for cooperation to be favoured by natural selection.
 
 In this project, I do not have time nor resources to run multiple 10^6 simulation for different conditions. Therefore, I decided to explore how networks can be used for evolutionary game theory games, by writing my own simulation, and building an interactive tool to visualize it.
 
@@ -57,10 +57,24 @@ set.seed(1993)
 
 To develop this simulation I wrote several functions that I describe below. The code can be found in this repository in functions.R.
 
--   assignType() : this function picks a random individual in the network an assignes it the attribute of cooperator "C", and it assignes "D", defector, to all others.
+-   __assignType()__ : this function picks a random individual in the network an assignes it the attribute of cooperator "C", and it assignes "D", defector, to all others.
 
+<<<<<<< HEAD
 -   assignColor() : for visualization purposes. Assignes vertex color red to defectors and blue to cooperators.
 -   nodeFit() : this function assigns "fitness" to each node. This characterstic is based on whether the node is a cooperator or a defector, and on the charactersitics of its neighbours. Specifically,
+=======
+-   __assignColor()__ : for visualization purposes. Assignes vertex color red to defectors and blue to cooperators.
+-   __nodeFit()__ : this function assigns "fitness" to each node. This characterstic is based on whether the node is a cooperator or a defector, and on the charactersitics of its neighbours. Specifically,
+	
+	_Fitness_ = 1- w- (benf * i - cost * k) * w , where:  
+	  
+	_benf_ = benefit gained from being neighbour to some cooperators.   
+	_cost_ = cost lost from helping neighbours by being a cooperators.   
+	_i_ = number of cooperatoring neighbours. 
+	_k_ = number of neighbours.  
+	_w_ : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection 	(the fitness increase from one
+	attribute rather than the other is small, in which case w<<1).  	
+>>>>>>> c86bb0b853684314fa7de55d3f0bbb93cc40af4e
 
     *F**i**t**n**e**s**s* = 1 − *w* − (*b**e**n**f* × *i* − *c**o**s**t* × *k*)\**w* where:
 
@@ -70,11 +84,11 @@ To develop this simulation I wrote several functions that I describe below. The 
     *k* = number of neighbours.
     *w* : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection (the fitness increase from one attribute rather than the other is small, in which case w&lt;&lt;1).
 
--   netFit() : assign fitness to whole network, node by node.
+-   __netFit()__ : assign fitness to whole network, node by node.
 
--   deathBirth() : death Birth updating for one node. See below for more on death Birth Updating.
--   netUpdate() : death birth through whole network
--   simDistCoop() : this function simulates deathBirth for the whole network multiple times. It then calculates, for each simulation, the percentage of cooperators at the end of the evolutionary process. It returns an array with percentage of cooperators in each of the simulations.
+-   __deathBirth()__ : death Birth updating for one node. See below for more on death Birth Updating.
+-   __netUpdate()__ : death birth through whole network
+-   __simDistCoop()__ : this function simulates deathBirth for the whole network multiple times. It then calculates, for each simulation, the percentage of cooperators at the end of the evolutionary process. It returns an array with percentage of cooperators in each of the simulations.
 
 ### The process : Death-Birth updating
 
@@ -82,12 +96,21 @@ To simulate evolution of a population, I developed a simulation to replicate a D
 
 In this case, I define the probability of a cooperator winning to be:
 
+<<<<<<< HEAD
 $Pc = (\\frac{F\_c}{F\_c + F\_d})$
+=======
+_Pc = F_c/(F_c + F_d)__
+>>>>>>> c86bb0b853684314fa7de55d3f0bbb93cc40af4e
 
 as defined in Outhsuki et al. (2006).
 
+<<<<<<< HEAD
 *F*<sub>*c*</sub> : fitness of neighbouring cooperators
 *F*<sub>*d*</sub> : fitness of neighbouring defectors
+=======
+_F_c_ : fitness of neighbouring cooperators   
+_F_d_ : fitness of neighbouring defectors
+>>>>>>> c86bb0b853684314fa7de55d3f0bbb93cc40af4e
 
 I conducted this preliminary investigations under weak selection, as advised in Outhsuki et al. (2006), although it would be interesting to examine the strong selection case.
 
@@ -99,13 +122,13 @@ In the image below, we can visualize the death-Birth update in a network that st
 
 In this Shiny App, we explore the netUpdate() function in different networks with 20 nodes each. User can define benefit and cost, and chose among 4 different sample networks.
 
-link to app: <https://biabbiassago.shinyapps.io/cooperationsim/>
+link to app: <https://biabbiassago.shinyapps.io/finalProject/>
 
 The code to create the app is in the files server.R and ui.R in this directory.
 
 ### Simulations on bigger networks
 
-I then plan to test the simulations on larger networks, with 100 nodes, and examine the distribution in Since these simulations are computationally heave and require around 1h each, in the interest of time, I present here the results only for the Cycle. I test under conditions of *b*/*c* &gt; *k* and *b*/*c* &lt; *k*
+I then plan to test the simulations on larger networks, with 100 nodes, and examine the distribution in Since these simulations are computationally heave and require around 1h each, in the interest of time, I present here the results only for the Cycle. I test under conditions of b/c > k and b/c < k
 
 #### On circle k = 2
 
@@ -260,12 +283,11 @@ Most evolutionary game-theory simulations are theoretical networks. Here we exam
 Challenges and future work:
 ---------------------------
 
--   Need to work on lattice simulation because all nodes now have same probability right now
 -   Create distributions for all different networks and observe conclusions.
--   To get a similar result to the paper would need to run a lot more times
--   What happens under strong selection conditions?
+-   To get a similar result to the paper would need to run a lot more times (how?)
 -   How does the centrality measure of the starting cooperator affect the simulations?
 -   What happens under strong selection conditions?
+-   The project initially was motivated by the fact that most of these simulations are run on "artificial" graphs rather than using empirical network data. Thererefore, I want to test my simulation on the Sampson's monk network, or the AddHealth network data.
 
 References
 ----------
