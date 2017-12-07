@@ -5,7 +5,7 @@ fluidPage(
     
     titlePanel("Evolution of cooperators in a Network"),
     
-    # choose which mails should be displayed
+    # choose which nets should be displayed
     sidebarPanel(
       selectInput("chosenNet", label = "Type of Network",
                   choices = c("Cycle","Lattice","Regular","Scale Free")),
