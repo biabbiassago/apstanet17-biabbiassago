@@ -155,7 +155,7 @@ histCircle2 = qplot(fracCircle_2,bins = 30, main="Fraction of Cooperators in 100
 grid.arrange(histCircle1,histCircle2)
 ```
 
-![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/appscreenshot.png)
+![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/histCircles.png)
 
 Although the histograms appear to be very similar, we can test for difference in mean percentage of cooperators. We obtain that the mean percentage of cooperators in the simulated networks is statistically larger when the benefit/cost ratio is larger (non overlapping 95% confidence intervals).
 
