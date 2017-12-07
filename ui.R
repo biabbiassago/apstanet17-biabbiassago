@@ -8,10 +8,10 @@ fluidPage(
     titlePanel(h3("Evolution of cooperators in a Network")),
     
     
-<<<<<<< HEAD
+
 =======
     # choose which nets should be displayed
->>>>>>> c86bb0b853684314fa7de55d3f0bbb93cc40af4e
+
     sidebarPanel(
       selectInput("chosenNet", label = "Type of Network",
                   choices = c("Cycle","Lattice","Regular","Scale Free")),
