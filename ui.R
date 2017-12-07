@@ -1,11 +1,13 @@
 library(shiny)
 
+#using Shiny platform, design an App to visualize the netUpdate() process as described in funcitons.R. In this document, the 
+#code to create the UI of the App. 
+
 fluidPage(
   pageWithSidebar(
+    titlePanel(h3("Evolution of cooperators in a Network")),
     
-    titlePanel("Evolution of cooperators in a Network"),
     
-    # choose which mails should be displayed
     sidebarPanel(
       selectInput("chosenNet", label = "Type of Network",
                   choices = c("Cycle","Lattice","Regular","Scale Free")),
@@ -18,15 +20,15 @@ fluidPage(
       
       checkboxInput("multStart", "Multiple Initial Cooperators", FALSE),
     
-      # SubmitButton - to avoid to much load 
+      # SubmitButton - to avoid too much load 
       submitButton("Simulate")
     ),
     
     # output
     mainPanel(
-    fluidRow(
-      splitLayout(cellWidths = c("50%", "50%"), plotOutput("networkBefore"), plotOutput("networkAfter"))
+      fluidRow(
+        splitLayout(cellWidths = c("50%", "50%"), plotOutput("networkBefore"), plotOutput("networkAfter"))
+      )
     )
-  )
   )
 )
