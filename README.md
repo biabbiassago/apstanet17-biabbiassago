@@ -7,6 +7,8 @@ __Bianca Brusco bb1569__
 The goal of this project is to understand how we can use networks as population models in an evolutionary game theory context.
 In this repo I keep working files. 
 
+__Read : finalpresentation.md for complete project.__
+
 
 ### Part 1: 
 
@@ -25,9 +27,10 @@ Represent the generational evolution for a network of 20 nodes, and visualize. T
 
 ### Part 3
 
-Test how benefit/cost ratio and number of neighbours of the nodes affects how cooperation spreads in the network.  Test on circle, lattice, scale free, and a 'real' network (Sampson's monk network).   
+In this part, I simulate 100 net-update processes at 9 different levels of b/c, from 0 to 9. I use at sample small world network with 20 nodes.  I test what happens after 1 and 2 generations. I repeat for both weak selection and strong selection. 
 
 	- file: simulations.R. 
+	- folder : simfiles containing the four .csv files with 100 simulations, for 1 and 2 generations, under weak and strong selection. 
 	
 	
 __Other files in this folder__
@@ -35,7 +38,7 @@ __Other files in this folder__
 Files used for prenstation of the project. The final presentation includes background on the topic that might be helpful to readers with no previous knowledge of evolutionary game theory.   
 
 	- proppresentation.pdf = presentation with initial project proposal.   
-	- finalpresentation.md =final markdown file presenting project's results (and changes). 
+	- finalpresentation.md = final markdown file presenting project's results. 
 
 
 	
