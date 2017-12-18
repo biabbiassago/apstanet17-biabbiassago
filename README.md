@@ -30,8 +30,8 @@ Represent the generational evolution for a network of 20 nodes, and visualize. T
 In this part, I simulate 100 net-update processes at 9 different levels of b/c, from 0 to 9. I use at sample small world network with 20 nodes.  I test what happens after 1 and 2 generations. I repeat for both weak selection and strong selection. 
 
 	- file: simulations.R. 
-	- folder : simfiles containing the four .csv files with 100 simulations,  \
-	for 1 and 2 generations, under weak and strong selection. 
+	- folder : simfiles containing the four .csv files with 100 simulations,  
+		for 1 and 2 generations, under weak and strong selection. 
 	
 	
 __Other files in this folder__
