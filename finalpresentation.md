@@ -16,7 +16,7 @@ In particular, we examine the attribute **"Cooperation"**. In this context, Coop
 
 The evolution of cooperation in animal populations has long been a subject of investigation. The fact that some animals cooperate seems, at a first glance, to oppose Darwin's Natural Selection theory: the genes of those who benefit from the help of others, while not wasting any resources if not on themseleves, are most likely to be passed on, as those individuals are likely to be the fittest.
 
-One important theory in evolutionary biology, that reconciled the empirical observation with the theory of Natural Selection, was developed by Hamilton in 1957 (check can't remember exactly). Hamilton argued that individuals do not only want to benefit their own fitness, but rather the fitness of individuals who share their gene pool. For example, Hamilton's theory explained why some ants spend their lives helping the Queen ant rather than focusing on reproducing. Indeed, they share more genes with their sister (Queen ant), than with their potential offspring.
+One important theory in evolutionary biology, that reconciled the empirical observation with the theory of Natural Selection, was developed by Hamilton in 1981 . Hamilton argued that individuals do not only want to benefit their own fitness, but rather the fitness of individuals who share their gene pool. For example, Hamilton's theory explained why some ants spend their lives helping the Queen ant rather than focusing on reproducing. Indeed, they share more genes with their sister (Queen ant), than with their potential offspring.
 
 In more recent years, the evolution of cooperation has been examined through different lenses, taking a game theoretical approach. The interaction of members of a population can be seen has an "evolutionary game", in which there is a dominant strategy, which not only depends on the two individual's fitness (or "payoff") but rather on the overall characteristics and fitness of the population. In some cases, the dominant strategy is "cooperator", in some, it is not.
 
@@ -31,7 +31,7 @@ All the code used throughout to generate visualizations or results in this prese
 
 ### Testing Evolution of Cooperation
 
-In this project, my initial aim was to replicate the results published by Outhsuki et al. in 2006. In the paper, the authors explore the evolution of cooperation in networks, investigating of the number of neighbours that each node has is an important variable. They prove that a *necessary condition* for cooperation to evolve is for the ratio of benefit of having cooperators as neighbours(b) over cost of helping them (c) to be larger than the number of neighbours (k). I.e $\\frac{b}{c}&gt; k$. This means: the less neighbours you interact with, the more you have to rely on them. And therefore, the more chances there are that you pick a cooperating strategy.
+In this project, my initial aim was to replicate the results published by Outhsuki et al. in 2006. In the paper, the authors explore the evolution of cooperation in networks, investigating of the number of neighbours that each node has is an important variable. They prove that a *necessary condition* for cooperation to evolve is for the ratio of benefit of having cooperators as neighbours(b) over cost of helping them (c) to be larger than the number of neighbours (k). I.e b/c > k. This means: the less neighbours you interact with, the more you have to rely on them. And therefore, the more chances there are that you pick a cooperating strategy.
 
 The authors test multiple cycles of simulation by introducing one single cooperator in a population of defectors, and observe in which cases the cooperator attribute evolves among all individuals.
 
@@ -41,7 +41,7 @@ Therefore they study the fixation probability of cooperation attribute, by perfo
 
 In this project, I do not have time nor resources to run multiple 10^6 simulation for different conditions. Therefore, I decided to explore how networks can be used for evolutionary game theory games, by writing my own simulation, and building an interactive tool to visualize it.
 
-Moreover, I will ran 100 rounds of my simulations on different graphs, to see if the $\\frac{b}{c}&gt; k$ rule seems to hold.
+Moreover, I will ran 100 rounds of my simulations on a small world network with 20 nodes, to see if the b/c > k rule seems to hold.
 
 ``` r
 library(igraph)
@@ -62,13 +62,15 @@ To develop this simulation I wrote several functions that I describe below. The 
 -   assignColor() : for visualization purposes. Assignes vertex color red to defectors and blue to cooperators.
 -   nodeFit() : this function assigns "fitness" to each node. This characterstic is based on whether the node is a cooperator or a defector, and on the charactersitics of its neighbours. Specifically,
 
-    *F**i**t**n**e**s**s* = 1 − *w* − (*b**e**n**f* × *i* − *c**o**s**t* × *k*)\**w* where:
+	
+	__Fitness__ = 1- w- (benf*i - cost*k)*w.   
+	benf = benefit gained from being neighbour to some cooperators. 
+	cost = cost lost from helping neighbours by being a cooperators.   
+	i = number of cooperatoring neighbours. 
+	k = number of neighbours.  
+	w : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection 	(the fitness increase from one
+	attribute rather than the other is small, in which case w<<1).  	
 
-    *b**e**n**f* = benefit gained from being neighbour to some cooperators
-    *c**o**s**t* = cost lost from helping neighbours by being a cooperators.
-    *i* = number of cooperatoring neighbours
-    *k* = number of neighbours.
-    *w* : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection (the fitness increase from one attribute rather than the other is small, in which case w&lt;&lt;1).
 
 -   netFit() : assign fitness to whole network, node by node.
 
@@ -82,12 +84,13 @@ To simulate evolution of a population, I developed a simulation to replicate a D
 
 In this case, I define the probability of a cooperator winning to be:
 
-$Pc = (\\frac{F\_c}{F\_c + F\_d})$
+Pc = F_c/(F\_c + F\_d)
 
 as defined in Outhsuki et al. (2006).
+where:
 
-*F*<sub>*c*</sub> : fitness of neighbouring cooperators
-*F*<sub>*d*</sub> : fitness of neighbouring defectors
+F_c : fitness of neighbouring cooperators
+F_d : fitness of neighbouring defectors
 
 I conducted this preliminary investigations under weak selection, as advised in Outhsuki et al. (2006), although it would be interesting to examine the strong selection case.
 
@@ -485,14 +488,16 @@ References and Further Reading
 
 -   *Crowds, and Markets: Reasoning about a Highly Connected World* By David Easley and Jon Kleinberg. Cambridge University Press, 2010.
 
--   \_The Ubiquity of Small-World Networks, Telesford, Joyce, Hayasaka, Burdette, Laurienti, **5**, 367-375, 2001
+-   *The Ubiquity of Small-World Networks*, Telesford, Joyce, Hayasaka, Burdette, Laurienti, **5**, 367-375, 2001
 
 -   *Social games in Social networks*, Abramson, Kuperman.
 
 -   *Evolutionary instability of zero-determinant strategies demonstrates that winning is not everything*, Adami, Hintze, Nature Communications,**4**,2013
 
--   Nowak, M. A. & Sigmund, K. Evolution of indirect reciprocity. Nature 437, 1291–1298 (2005)
+-  *Evolution of indirect reciprocity.*  Nowak, M. A. & Sigmund, K. , Nature 437, 1291–1298 (2005)
 
--   Killingback, T. & Doebeli, M. Spatial evolutionary game theory: Hawks and Doves revisited. Proc. R. Soc. Lond. B 263, 1135–1144 (1996)
+-   *Spatial evolutionary game theory: Hawks and Doves revisited.* , Killingback, T. & Doebeli, M. Proc. R. Soc. Lond. B 263, 1135–1144 (1996)
+
+- *The Evolution of Cooperation*, Robert Axelrod; William D. Hamilton, Science, New Series, __211__, pp. 1390-1396.
 
 -   Tutorial on building Shiny App : <http://rstudio.github.io/shiny/tutorial/>
