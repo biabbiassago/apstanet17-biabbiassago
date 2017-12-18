@@ -136,6 +136,10 @@ plotScale4 = plot(sampleScale2,layout= lay, vertex.label=NA, main = "b/c = 1 , a
 
 To understand what happens on average, and for different level of benefit-cost ratio, I ran 100 simulations for each of 9 levels of b/c, from 0 to 16. What is the maximum percentage of cooperators for each of these levels? I decided to run these simulations on a Small World Network, which is a good representation of population. The network used has 20 nodes and a mean degree k = 4.
 
+I run these simulation for one and two generations, first under weak selection and then under strong selection. 
+
+The files with the simulations can be found at simfiles. 
+
 #### Weak selection
 
 ``` r
@@ -156,7 +160,7 @@ for(r in seq(0,16,2)){
   i = i + 1
 }
 
-write.csv(dataProp_weak, "dataProp_weak.csv")
+write.csv(dataProp_weak, "simfiles/dataProp_weak.csv")
 
 #2 Generations 
 dataProp_weak_two = array(dim = c(100,9))
@@ -167,7 +171,7 @@ for(r in seq(0,16,2)){
   i = i + 1
 }
 
-write.csv(dataProp_weak_two, "dataProp_weak_two.csv")
+write.csv(dataProp_weak_two, "simfiles/dataProp_weak_two.csv")
 ```
 
 The small-world network:
@@ -327,7 +331,7 @@ for(r in seq(0,16,2)){
   i = i + 1
 }
 
-write.csv(dataProp_strong, "dataProp_strong.csv")
+write.csv(dataProp_strong, "simfiles/dataProp_strong.csv")
 
 #2 Generations 
 dataProp_strong_two = array(dim = c(100,9))
@@ -338,7 +342,7 @@ for(r in seq(0,16,2)){
   i = i + 1
 }
 
-write.csv(dataProp_strong_two, "dataProp_strong_two.csv")
+write.csv(dataProp_strong_two, "simfiles/dataProp_strong_two.csv")
 ```
 
 **After one Generation:**
