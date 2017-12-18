@@ -140,29 +140,31 @@ deathBirth = function(net,benf, cost, w=0.1){
  
   p = fc/(fc+fd)
   
-  #cheap fix... non capisco bene cosa ci sia che non funziona
-  
+  #da riguardare
+   
   # HERE I allow for random mutation of cooperator. That is even if no neighours are cooperators, 
   #one still has a 1% probability of becoming it. 
   if(p<=0){
-    p = 0.1
+    p = 0.01
   }
   else if(p>=1){
     #allow for random mutation of defectors as well.
-    p = 0.9
+    p = 0.99
   }
   #assign based on prob
   V(net)$type[dead] = sample(c("C","D"), size=1, prob=c(p,1-p))
   
-  V(net)$fitness[dead] = nodeFit(net,dead,benf, cost, w) #reassign fitness to whole network.
+  V(net)$fitness[dead] = nodeFit(net,dead,benf, cost, w) #reassign fitness 
   #Can make it faster by only assigning it to dead and neighbours. 
   for( count in 1:length(i)){
     V(net)$fitness[i[count]] = nodeFit(net,i[count],benf,cost)
   }
   
+  net = assignColor(net)
   return(net)
 
 }
+
 netUpdate = function(net,benf, cost, w=0.1,rounds = 100){
   
   ## simulates network update based on Death Birth process
@@ -177,6 +179,7 @@ netUpdate = function(net,benf, cost, w=0.1,rounds = 100){
   }
   return(net)
 }
+
 simDistCoop = function(net,benf, cost, w = 0.1 , sims = 100, rounds = 100) {
   ## performs multiple netUpdate simulations -- network update based on Death-Birth process 
   ## @net = igraph network object.
@@ -195,6 +198,8 @@ simDistCoop = function(net,benf, cost, w = 0.1 , sims = 100, rounds = 100) {
   }
   return(frac)
 }
+
+
 # ### my functions ###
 # assignType()    - 
 # assignTypeMult()

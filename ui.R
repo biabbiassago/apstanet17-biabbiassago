@@ -7,14 +7,12 @@ fluidPage(
   pageWithSidebar(
     titlePanel(h3("Evolution of cooperators in a Network")),
     
-    
-
-=======
+  
     # choose which nets should be displayed
 
     sidebarPanel(
       selectInput("chosenNet", label = "Type of Network",
-                  choices = c("Cycle","Lattice","Regular","Scale Free")),
+                  choices = c("Cycle","Lattice","Regular K = 10","Scale Free mean k = 2", "Small World mean k =4")),
       
       sliderInput("benf", label = "Benefit",
                   min = 2, max = 20, value = 20, step = 1),

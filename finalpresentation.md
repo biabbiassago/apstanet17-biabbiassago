@@ -37,7 +37,7 @@ The authors test multiple cycles of simulation by introducing one single coopera
 
 They argue that if the cooperation attribute is neutral (i.e. it neither increases nor decreases fitness) then the probability of a single cooperator turning the enitre population into defectors (called "fixation probability") is of 1/N (with N, number of nodes). If the fixation probability of a single cooperator is greater than 1/N, then selection favors the emergence of cooperation.
 
-Therefore they study the fixation probability of cooperation attribute, by performing 10^6 simulations in each different settings (i.e. different values of benefit, cost and different types of networks). They then examine in how many of these simulations the cooperation attribute has fixated. They demonstrate that _b/c > k_  is a necessary condition (albeit not sufficient) for cooperation to be favoured by natural selection.
+Therefore they study the fixation probability of cooperation attribute, by performing 10^6 simulations in each different settings (i.e. different values of benefit, cost and different types of networks). They then examine in how many of these simulations the cooperation attribute has fixated. They demonstrate that $\\frac{b}{c}&gt; k$ is a necessary condition (albeit not sufficient) for cooperation to be favoured by natural selection.
 
 In this project, I do not have time nor resources to run multiple 10^6 simulation for different conditions. Therefore, I decided to explore how networks can be used for evolutionary game theory games, by writing my own simulation, and building an interactive tool to visualize it.
 
@@ -57,29 +57,24 @@ set.seed(1993)
 
 To develop this simulation I wrote several functions that I describe below. The code can be found in this repository in functions.R.
 
--   __assignType()__ : this function picks a random individual in the network an assignes it the attribute of cooperator "C", and it assignes "D", defector, to all others.
-
+-   assignType() : this function picks a random individual in the network an assignes it the attribute of cooperator "C", and it assignes "D", defector, to all others.
 
 -   assignColor() : for visualization purposes. Assignes vertex color red to defectors and blue to cooperators.
 -   nodeFit() : this function assigns "fitness" to each node. This characterstic is based on whether the node is a cooperator or a defector, and on the charactersitics of its neighbours. Specifically,
-=======
--   __assignColor()__ : for visualization purposes. Assignes vertex color red to defectors and blue to cooperators.
--   __nodeFit()__ : this function assigns "fitness" to each node. This characterstic is based on whether the node is a cooperator or a defector, and on the charactersitics of its neighbours. Specifically,
-	
-	_Fitness_ = 1- w- (benf * i - cost * k) * w , where:  
-	  
-	_benf_ = benefit gained from being neighbour to some cooperators.   
-	_cost_ = cost lost from helping neighbours by being a cooperators.   
-	_i_ = number of cooperatoring neighbours. 
-	_k_ = number of neighbours.  
-	_w_ : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection 	(the fitness increase from one
-	attribute rather than the other is small, in which case w<<1).  	
 
--   __netFit()__ : assign fitness to whole network, node by node.
+    *F**i**t**n**e**s**s* = 1 − *w* − (*b**e**n**f* × *i* − *c**o**s**t* × *k*)\**w* where:
 
--   __deathBirth()__ : death Birth updating for one node. See below for more on death Birth Updating.
--   __netUpdate()__ : death birth through whole network
--   __simDistCoop()__ : this function simulates deathBirth for the whole network multiple times. It then calculates, for each simulation, the percentage of cooperators at the end of the evolutionary process. It returns an array with percentage of cooperators in each of the simulations.
+    *b**e**n**f* = benefit gained from being neighbour to some cooperators
+    *c**o**s**t* = cost lost from helping neighbours by being a cooperators.
+    *i* = number of cooperatoring neighbours
+    *k* = number of neighbours.
+    *w* : determines whether we are under strong selection (one attribute is largely better than another, in which case w=1), or under weak selection (the fitness increase from one attribute rather than the other is small, in which case w&lt;&lt;1).
+
+-   netFit() : assign fitness to whole network, node by node.
+
+-   deathBirth() : death Birth updating for one node. See below for more on death Birth Updating.
+-   netUpdate() : death birth through whole network
+-   simDistCoop() : this function simulates deathBirth for the whole network multiple times. It then calculates, for each simulation, the percentage of cooperators at the end of the evolutionary process. It returns an array with percentage of cooperators in each of the simulations.
 
 ### The process : Death-Birth updating
 
@@ -87,117 +82,30 @@ To simulate evolution of a population, I developed a simulation to replicate a D
 
 In this case, I define the probability of a cooperator winning to be:
 
-
-_Pc = F_c/(F_c + F_d)__
-
+$Pc = (\\frac{F\_c}{F\_c + F\_d})$
 
 as defined in Outhsuki et al. (2006).
 
-_F_c_ : fitness of neighbouring cooperators   
-_F_d_ : fitness of neighbouring defectors
+*F*<sub>*c*</sub> : fitness of neighbouring cooperators
+*F*<sub>*d*</sub> : fitness of neighbouring defectors
 
 I conducted this preliminary investigations under weak selection, as advised in Outhsuki et al. (2006), although it would be interesting to examine the strong selection case.
 
 In the image below, we can visualize the death-Birth update in a network that starts with 6 cooperators and 4 defectors, and eventually turns in a full-cooperators population.
 
-![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/example.gif)
+![image](images/example.gif)
 
 #### What is happening? Visualizing in a Shiny App
 
 In this Shiny App, we explore the netUpdate() function in different networks with 20 nodes each. User can define benefit and cost, and chose among 4 different sample networks.
 
-link to app: <https://biabbiassago.shinyapps.io/finalProject/>
-
-Screenshot for github document: 
-![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/appscreenshot.png)
-
+**link to app**: <https://biabbiassago.shinyapps.io/finalProject/>
 
 The code to create the app is in the files server.R and ui.R in this directory.
 
-### Simulations on bigger networks
+![](images/appscreenshot.png)
 
-I then plan to test the simulations on larger networks, with 100 nodes, and examine the distribution in Since these simulations are computationally heave and require around 1h each, in the interest of time, I present here the results only for the Cycle. I test under conditions of b/c > k and b/c < k
-
-#### On circle k = 2
-
-``` r
-n = 100
-#for benefit/cost > k =2
-benf_1 = 20
-cost_1 = 1
-sampleCircle = make_ring(n, directed=FALSE)
-sampleCircle = assignType(sampleCircle)
-sampleCircle = assignColor(sampleCircle)
-sampleCircle = netFit(sampleCircle,benf = benf_1,cost =cost_1)
-
-#for benefit/cost < k =2
-benf_2 = 1
-cost_2 = 1
-sampleCircle2 = make_ring(n, directed=FALSE)
-sampleCircle2 = assignType(sampleCircle2)
-sampleCircle2 = assignColor(sampleCircle2)
-sampleCircle2 = netFit(sampleCircle2,benf = benf_2,cost =cost_2)
-```
-
-``` r
-#100 simulations
-fracCircle_1 = simDistCoop(sampleCircle,benf = benf_1, cost = cost_1,100,500)
-fracCircle_2 = simDistCoop(sampleCircle2,benf= benf_2, cost = cost_2, 100, 500)
-
-z.test(mean(fracCircle_1), mean(fracCircle_2), alternative = "greater",mu = 0)
- confIntCircle_1= c(mean(fracCircle_1)-1.96*sd(fracCircle_1)/sqrt(n),mean(fracCircle_1)+1.96*sd(fracCircle_1)/sqrt(n))
- confIntCircle_2 =c(mean(fracCircle_2)-1.96*sd(fracCircle_2)/sqrt(n),mean(fracCircle_2)+1.96*sd(fracCircle_2)/sqrt(n))
- 
-par(mfrow = c(1,2))
-histCircle1 = qplot(fracCircle_1,bins = 30, main="Fraction of Cooperators in 100 Simulations, b/c=20",xlab="fraction of Cooperators",geom="histogram") + theme_minimal()
-histCircle2 = qplot(fracCircle_2,bins = 30, main="Fraction of Cooperators in 100 Simulations, b/c=1",xlab="fraction of Cooperators",geom="histogram") + theme_minimal()
-
-grid.arrange(histCircle1,histCircle2)
-```
-
-![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/histCircles.png)
-
-Although the histograms appear to be very similar, we can test for difference in mean percentage of cooperators. We obtain that the mean percentage of cooperators in the simulated networks is statistically larger when the benefit/cost ratio is larger (non overlapping 95% confidence intervals).
-
-``` r
-#values are hard coded cause I don't have time to re-run simulation in creating markdown.
-# but i want pretty table :)
-
-lower = c(0.111,0.091)
-mean = c(0.120,0.098)
-upper = c(0.129,0.105)
-min = c(0.01,0.01)
-max = c(0.28,0.21)
-
-
-resultsCircle = data.frame(lower,mean,upper,min,max) 
-colnames(resultsCircle) = c("95% CI l.b.","mean","95% CI u.b.","min","max")
-rownames(resultsCircle) = c("b/c = 20", "b/c = 1")
-kable(resultsCircle, caption= "Comparison of mean % of cooperators for different benefit-cost ratios")
-```
-
-|          |  95% CI l.b.|   mean|  95% CI u.b.|   min|   max|
-|----------|------------:|------:|------------:|-----:|-----:|
-| b/c = 20 |        0.111|  0.120|        0.129|  0.01|  0.28|
-| b/c = 1  |        0.091|  0.098|        0.105|  0.01|  0.21|
-
-#### On scale Free (represents populations well)
-
-``` r
-n = 100
-#for benefit/cost > k =2
-sampleScale = barabasi.game(n, directed = F)
-sampleScale = assignType(sampleScale)
-sampleScale = assignColor(sampleScale)
-sampleScale2 = sampleScale
-
-sampleScale = netFit(sampleScale,benf = benf_1, cost= cost_1)
-
-#for benefit/cost < k =2
-sampleScale2 = netFit(sampleScale2,benf = benf_2, cost= cost_2)
-```
-
-For now, let's see simulate only once to visualize in a Scale Free network for the two networks:
+#### The process on a Scale Free Network
 
 ``` r
 sampleScale_up = netUpdate(sampleScale, benf = benf_1, cost = cost_1, rounds = 500)
@@ -219,70 +127,365 @@ plotScale3 = plot(sampleScale2,layout= lay, vertex.label=NA, main = "b/c = 1 , b
 plotScale4 = plot(sampleScale2,layout= lay, vertex.label=NA, main = "b/c = 1 , after")
 ```
 
-![image](https://github.com/apstanet2017/apstanet17-biabbiassago/blob/master/images/scalePlot.png)
+![](images/scalePlot.png)
 
-**Further work to finish**
+### Small World Network - simulations
 
-``` r
-fracScale_1 = simDistCoop(sampleScale, benf = benf_1, cost = cost_1, 100,500)
-fracScale_2 = simDistCoop(sampleScale2, benf = benf_2, cost = cost_2, 100,500)
+To understand what happens on average, and for different level of benefit-cost ratio, I ran 100 simulations for each of 9 levels of b/c, from 0 to 16. What is the maximum percentage of cooperators for each of these levels? I decided to run these simulations on a Small World Network, which is a good representation of population. The network used has 20 nodes and a mean degree k = 4.
 
-par(mfrow = c(1,2))
-hist(fracScale_1, freq = F)
-hist(fracScale_2, freq = F)
-```
-
-#### On Lattice k =4
-
-Repeat simulation 100 (or 1000 times)
-2histograms (b/c &lt; k , b/c &gt;k)
+#### Weak selection
 
 ``` r
-#for benefit/cost > k =2
-sampleLattice = make_lattice(n/10,n/10, directed=FALSE)
-sampleLattice = assignType(sampleLattice)
-sampleLattice = assignColor(sampleLattice)
-sampleLattice = netFit(sampleLattice,benf = benf_1,cost =cost_1)
+##Under weak selection
+smallestW = sample_smallworld(1, 20, 2, 0.1, loops = FALSE, multiple = FALSE)
+smallestWTest = assignType(smallestW)
+smallestWTest = assignColor(smallestWTest)
+smallestWTest = netFit(smallestWTest, benf = 5, cost = 1, w = 0.1)
+plot(smallestWTest)
 
-#for benefit/cost < k =2
-benf_2 = 1
-cost_2 = 1
-sampleLattice2 = make_ring(n, directed=FALSE)
-sampleLattice2 = assignType(sampleLattice2)
-sampleLattice2 = assignColor(sampleLattice2)
-sampleLattice2 = netFit(sampleLattice2,benf = benf_2,cost =cost_2)
 
-fracLattice_1 = simDistCoop(sampleLattice,benf = benf_1, cost = cost_1,100,500)
-fracLattice_2 = simDistCoop(sampleLattice2,benf= benf_2, cost = cost_2, 100, 500)
-par(mfrow = c(1,2))
-hist(fracLattice_1, freq = F)
-hist(fracLattice_2, freq = F)
+#1 Generation
+dataProp_weak = array(dim = c(100,9))
+i = 1
+for(r in seq(0,16,2)){
+  currentFrac = simDistCoop(net = smallestWTest, benf = r, cost = 1, w=0.1, sims=100,rounds=75)
+  dataProp_weak[,i] = currentFrac
+  i = i + 1
+}
+
+write.csv(dataProp_weak, "dataProp_weak.csv")
+
+#2 Generations 
+dataProp_weak_two = array(dim = c(100,9))
+i = 1
+for(r in seq(0,16,2)){
+  currentFrac = simDistCoop(net = smallestWTest, benf = r, cost = 1, w=0.1, sims=100,rounds=150)
+  dataProp_weak_two[,i] = currentFrac
+  i = i + 1
+}
+
+write.csv(dataProp_weak_two, "dataProp_weak_two.csv")
 ```
 
-#### On regular k = 10
+The small-world network:
 
-Repeat simulation 100 (or 1000 times)
-2histogram (b/c &lt; k , b/c &gt;k)
+    ## [1] "The mean degree is 4"
 
-#### On monk network: smaller real network
+![](finalpresentation_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-2-1.png)
 
-Most evolutionary game-theory simulations are theoretical networks. Here we examine what happens if we run the simulation on the sampson's monk network.
+**After one generation**
 
-Challenges and future work:
----------------------------
+``` r
+dataProp_weak = read.csv("dataProp_weak.csv")
+dataProp_weak$X = NULL
 
--   Create distributions for all different networks and observe conclusions.
--   To get a similar result to the paper would need to run a lot more times (how?)
+
+
+#Summaries and plot
+
+colnames(dataProp_weak) = c(seq(0,16,2))
+
+#first five simulations for each b/c level
+head(dataProp_weak,5)
+```
+
+    ##      0    2    4 6    8   10  12   14   16
+    ## 1 0.25 0.00 0.00 0 0.00 0.15 0.0 0.25 0.05
+    ## 2 0.05 0.60 0.00 0 0.00 0.00 0.0 0.05 0.00
+    ## 3 0.35 0.00 0.05 0 0.00 0.00 0.0 0.00 0.00
+    ## 4 0.00 0.00 0.35 0 0.00 0.00 0.0 0.00 0.00
+    ## 5 0.00 0.05 0.05 0 0.05 0.30 0.1 0.00 0.00
+
+``` r
+print("The means for each column are:")
+```
+
+    ## [1] "The means for each column are:"
+
+``` r
+kable(t(colMeans(dataProp_weak)), caption = "Mean fraction of Cooperators for different b/c")
+```
+
+|      0|      2|       4|      6|       8|     10|      12|      14|      16|
+|------:|------:|-------:|------:|-------:|------:|-------:|-------:|-------:|
+|  0.154|  0.062|  0.0195|  0.046|  0.0415|  0.123|  0.1135|  0.0765|  0.0745|
+
+``` r
+kable(t(apply(dataProp_weak,2,max)), caption = "Max fraction of Cooperators for different b/c")
+```
+
+|    0|    2|     4|    6|     8|    10|    12|   14|   16|
+|----:|----:|-----:|----:|-----:|-----:|-----:|----:|----:|
+|  0.9|  0.6|  0.45|  0.8|  0.65|  0.65|  0.65|  0.7|  0.6|
+
+``` r
+sim_plot1 = ggplot(stack(dataProp_weak), aes(x = factor(ind, levels = names(dataProp_weak)), y = values), fill = "Legend") +
+    geom_boxplot(alpha = 0.2, colour = "grey65")+ 
+    labs(title="One generation : 100 simulations at each level of b/c at weak selection \n mean degree K =4",x="b/c", y = "Fraction of cooperators") +
+    stat_summary(fun.y = mean, geom = "line", aes(color = "navyblue", group=1), size = 1, alpha = 0.8)  + 
+    stat_summary(fun.y = mean, geom = "point") +
+    stat_summary(fun.y = max, geom = "line", size = 1, aes(color = "red4", group=1), alpha = 0.8) +
+    stat_summary(fun.y = max, geom = "point") +
+  geom_vline(xintercept= 3 , size = 0.4)
+  
+   
+
+sim_plot1 + theme_minimal() + theme(plot.title = element_text(face="bold", size=14, hjust=0.5), legend.justification = "top", legend.title = element_blank()) + scale_colour_manual(values =c('red4'='red4','navyblue'='navyblue'), labels = c('Mean value','Max value'))
+```
+
+<img src="finalpresentation_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-3-1.png" style="display: block; margin: auto;" />
+
+At one generation and under weak selection, the ratio of benefit to cost does not seem to have much of an effect. Actually, we see that the highest percentage of cooperators has occurred in one simulation at b/c = 0. The mean does not seem to have an upward trend, nor do the max values.
+
+**After two generations:**
+
+I will then look at what happens over two generations, still under weak selection:
+
+``` r
+dataProp_weak_two = read.csv("dataProp_weak_two.csv")
+dataProp_weak_two$X = NULL
+
+
+colnames(dataProp_weak_two) = c(seq(0,16,2))
+
+#first five simulations..
+head(dataProp_weak_two,5)
+```
+
+    ##      0    2    4 6   8   10   12  14   16
+    ## 1 0.45 0.00 0.00 0 0.4 0.05 0.05 0.4 0.15
+    ## 2 0.00 0.00 0.00 0 0.0 0.10 0.00 0.0 0.55
+    ## 3 1.00 0.55 0.05 0 0.0 0.55 0.00 0.2 0.45
+    ## 4 0.00 0.05 0.00 0 0.8 0.00 0.00 0.3 0.35
+    ## 5 0.00 0.00 0.00 0 0.0 0.30 0.00 0.0 0.40
+
+``` r
+print("The means for each column are:")
+```
+
+    ## [1] "The means for each column are:"
+
+``` r
+kable(t(colMeans(dataProp_weak_two)), caption = "Mean fraction of Cooperators for different b/c")
+```
+
+|       0|       2|     4|       6|       8|      10|     12|     14|     16|
+|-------:|-------:|-----:|-------:|-------:|-------:|------:|------:|------:|
+|  0.1985|  0.0565|  0.05|  0.0745|  0.1135|  0.2795|  0.257|  0.262|  0.246|
+
+``` r
+kable(t(apply(dataProp_weak_two,2,max)), caption = "Max fraction of Cooperators for different b/c")
+```
+
+|    0|     2|     4|    6|    8|    10|   12|   14|    16|
+|----:|-----:|-----:|----:|----:|-----:|----:|----:|-----:|
+|    1|  0.95|  0.95|    1|    1|  0.95|    1|    1|  0.95|
+
+``` r
+sim_plot2 = ggplot(stack(dataProp_weak_two), aes(x = factor(ind, levels = names(dataProp_weak_two)), y = values), fill = "Legend") +
+    geom_boxplot(alpha = 0.2, colour = "grey65")+ 
+    labs(title="Two generations : 100 simulations at each level of b/c at weak selection \n mean degree K =4",x="b/c", y = "Fraction of cooperators") +
+    stat_summary(fun.y = mean, geom = "line", aes(color = "navyblue", group=1), size = 1, alpha = 0.8)  + 
+    stat_summary(fun.y = mean, geom = "point") +
+    stat_summary(fun.y = max, geom = "line", size = 1, aes(color = "red4", group=1), alpha = 0.8) +
+    stat_summary(fun.y = max, geom = "point") +
+  geom_vline(xintercept= 3 , size = 0.4)
+
+sim_plot2 + theme_minimal() + theme(plot.title = element_text(face="bold", size=14, hjust=0.5), legend.justification = "top", legend.title = element_blank()) + scale_colour_manual(values =c('red4'='red4','navyblue'='navyblue'), labels = c('Mean value','Max value'))
+```
+
+<img src="finalpresentation_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-4-1.png" style="display: block; margin: auto;" />
+
+In this case, we see that some of the simulations have reached a full population of cooperators. These are at values of b/c = 0, 6, 8, 12 and 14. These seems to contraddict the paper's claim that a necessary condition to achieved a full population of cooperators is for b/c &gt; k = 4 (in our case) However, I note that I have introduced in my simulation a condition for which the min value of evolution of a cooperator is 1%, so that this has affected the case of benefit = 0. I will remove this in the future to observe the results.
+
+If we disregard the case of b/c = 0, we see that from two onwards there is an increasing trend of the mean, that seems to converge at 0.25 after benefit/cost = 10. In future analysis, I intend to analyze whether this is a stable state for the specific number of generations (two).
+
+#### Under strong selection
+
+I then run the same simulaiton but under strong selection conditions, i.e. when w = 1.
+
+``` r
+#UNDER STRONG SELECTION
+
+#di notte venerdi
+smallestW_strong = sample_smallworld(1, 20, 2, 0.1, loops = FALSE, multiple = FALSE)
+smallestWTest_strong = assignType(smallestW_strong)
+smallestWTest_strong = assignColor(smallestWTest_strong)
+smallestWTest_strong = netFit(smallestWTest_strong, benf = 5, cost = 1, w = 1)
+
+
+
+#1 Generation
+dataProp_strong = array(dim = c(100,9))
+i = 1
+for(r in seq(0,16,2)){
+  currentFrac = simDistCoop(net = smallestWTest_strong, benf = r, cost = 1, w=1, sims=100,rounds=75)
+  dataProp_strong[,i] = currentFrac
+  i = i + 1
+}
+
+write.csv(dataProp_strong, "dataProp_strong.csv")
+
+#2 Generations 
+dataProp_strong_two = array(dim = c(100,9))
+i = 1
+for(r in seq(0,16,2)){
+  currentFrac = simDistCoop(net = smallestWTest_strong, benf = r, cost = 1, w=1, sims=100,rounds=150)
+  dataProp_strong_two[,i] = currentFrac
+  i = i + 1
+}
+
+write.csv(dataProp_strong_two, "dataProp_strong_two.csv")
+```
+
+**After one Generation:**
+
+``` r
+dataProp_strong = read.csv("dataProp_strong.csv")
+dataProp_strong$X = NULL
+
+
+
+#Summaries and plot
+
+colnames(dataProp_strong) = c(seq(0,16,2))
+
+#first five simulations for each b/c level
+head(dataProp_strong,5)
+```
+
+    ##      0   2    4    6   8   10   12 14   16
+    ## 1 0.00 0.1 0.00 0.00 0.0 0.00 0.00  0 0.00
+    ## 2 0.00 0.0 0.00 0.00 0.0 0.00 0.25  0 0.05
+    ## 3 0.35 0.0 0.00 0.00 0.0 0.00 0.05  0 0.00
+    ## 4 0.05 0.0 0.05 0.00 0.1 0.05 0.30  0 0.00
+    ## 5 0.00 0.0 0.00 0.05 0.0 0.05 0.05  0 0.00
+
+``` r
+print("The means for each column are:")
+```
+
+    ## [1] "The means for each column are:"
+
+``` r
+kable(t(colMeans(dataProp_strong)), caption = "Mean fraction of Cooperators for different b/c")
+```
+
+|       0|       2|      4|      6|      8|     10|     12|     14|      16|
+|-------:|-------:|------:|------:|------:|------:|------:|------:|-------:|
+|  0.0655|  0.0315|  0.042|  0.013|  0.026|  0.015|  0.049|  0.051|  0.0245|
+
+``` r
+kable(t(apply(dataProp_strong,2,max)), caption = "Max fraction of Cooperators for different b/c")
+```
+
+|    0|     2|     4|    6|     8|    10|   12|   14|   16|
+|----:|-----:|-----:|----:|-----:|-----:|----:|----:|----:|
+|  0.7|  0.65|  0.75|  0.5|  0.25|  0.35|  0.5|  0.4|  0.3|
+
+``` r
+sim_plot3 = ggplot(stack(dataProp_strong), aes(x = factor(ind, levels = names(dataProp_strong)), y = values), fill = "Legend") +
+    geom_boxplot(alpha = 0.2, colour = "grey65")+ 
+    labs(title="One generation : 100 simulations at each level of b/c under strong selection \n mean degree K =4 ",x="b/c", y = "Fraction of cooperators") +
+    stat_summary(fun.y = mean, geom = "line", aes(color = "navyblue", group=1), size = 1, alpha = 0.8)  + 
+    stat_summary(fun.y = mean, geom = "point") +
+    stat_summary(fun.y = max, geom = "line", size = 1, aes(color = "red4", group=1), alpha = 0.8) +
+    stat_summary(fun.y = max, geom = "point") +
+  geom_vline(xintercept= 3, size = 0.4)
+  
+   
+
+sim_plot3 + theme_minimal() + theme(plot.title = element_text(face="bold", size=14, hjust=0.5), legend.justification = "top", legend.title = element_blank()) + scale_colour_manual(values =c('red4'='red4','navyblue'='navyblue'), labels = c('Mean value','Max value'))
+```
+
+<img src="finalpresentation_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+
+Under strong selection there is more variability in the max values of the different b/c levels, but the mean remains pretty stable at one generation.
+
+**After two generations**
+
+``` r
+dataProp_strong_two = read.csv("dataProp_strong_two.csv")
+dataProp_strong_two$X = NULL
+
+
+
+#Summaries and plot
+
+colnames(dataProp_strong_two) = c(seq(0,16,2))
+
+#first five simulations for each b/c level
+head(dataProp_strong_two,5)
+```
+
+    ##   0    2 4    6 8  10   12  14  16
+    ## 1 0 0.00 0 0.65 0 0.0 0.00 0.5 0.8
+    ## 2 0 0.00 0 0.10 0 0.0 0.15 0.0 0.0
+    ## 3 0 0.45 0 0.00 0 0.1 0.15 0.0 0.0
+    ## 4 0 0.00 0 0.00 0 0.0 0.00 0.0 0.0
+    ## 5 0 0.00 0 0.00 0 0.0 0.00 1.0 0.0
+
+``` r
+print("The means for each column are:")
+```
+
+    ## [1] "The means for each column are:"
+
+``` r
+kable(t(colMeans(dataProp_strong_two)), caption = "Mean fraction of Cooperators for different b/c")
+```
+
+|       0|       2|      4|      6|       8|      10|     12|     14|      16|
+|-------:|-------:|------:|------:|-------:|-------:|------:|------:|-------:|
+|  0.1425|  0.0245|  0.053|  0.054|  0.0415|  0.0375|  0.126|  0.109|  0.1085|
+
+``` r
+kable(t(apply(dataProp_strong_two,2,max)), caption = "Max fraction of Cooperators for different b/c")
+```
+
+|    0|     2|     4|    6|    8|    10|    12|   14|   16|
+|----:|-----:|-----:|----:|----:|-----:|-----:|----:|----:|
+|    1|  0.55|  0.95|  0.8|    1|  0.45|  0.85|    1|    1|
+
+``` r
+sim_plot4 = ggplot(stack(dataProp_strong_two), aes(x = factor(ind, levels = names(dataProp_strong_two)), y = values), fill = "Legend") +
+    geom_boxplot(alpha = 0.2, colour = "grey65")+ 
+    labs(title="Two generations : 100 simulations at each level of b/c under strong selection \n mean degree K =4 ",x="b/c", y = "Fraction of cooperators") +
+    stat_summary(fun.y = mean, geom = "line", aes(color = "navyblue", group=1), size = 1, alpha = 0.8)  + 
+    stat_summary(fun.y = mean, geom = "point") +
+    stat_summary(fun.y = max, geom = "line", size = 1, aes(color = "red4", group=1), alpha = 0.8) +
+    stat_summary(fun.y = max, geom = "point") +
+  geom_vline(xintercept= 3, size = 0.4)
+  
+   
+
+sim_plot4 + theme_minimal() + theme(plot.title = element_text(face="bold", size=14, hjust=0.5), legend.justification = "top", legend.title = element_blank()) + scale_colour_manual(values =c('red4'='red4','navyblue'='navyblue'), labels = c('Mean value','Max value'))
+```
+
+<img src="finalpresentation_files/figure-markdown_github-ascii_identifiers/unnamed-chunk-7-1.png" style="display: block; margin: auto;" />
+
+As observed under weak selection, the reason why one simulation at b/c = 0 reached a fraction of 1 might be because I allow for random mutations in the model. Other than that, we see again a larger level of variation under strong selection. The mean seems to increase after b/c = 12 and it might be reaching a stable conidition of around a fraction of around 0.12 (for this number of generations).
+
+Note: in most of the simulations, the mode (as well as the median) is 0. This makes sense, because we start from one single cooperator which has a high chance of being overtaken. However, this is probably influence by where the intiial cooperator is placed and what its centrality measures are. I.e., if the first cooperator has many neighbours or not, this probably would change how many simulations end up with a fraction of 0 cooperators.
+
+My hypothesis is that after many generations, there would be a level of b/c for which the fraction of cooperators would converge to 0.99 ( if we allow for random mutation of defectors at 1%) although I hope to gain a better understanding after examining the analytical solution.
+
+Limitation, challenges and future work:
+---------------------------------------
+
+-   Make simulation functions more efficients and faster!
+-   I think that I ran the simulations for too few values under the 'threshold' of b/c = 4 . This made it hard to see what happens on average before. Moreover, the fact that I introduced "random evolution of cooperator characteristic", by making probability of being a coopeator have a min of 0.01, I think this affected what happens at b/c = 0. In retrospect, I would have run simulations for b/c = 1 and b/c = 3 as well. Running each completed simulations for the 9 different levels took around ~4 h, so I do not have the time to re-do it now. I update in the future.
+-   Take a closer look at the analytical solution and stable state. Specifically, what happens after multiple generation? I could use the NYU cluster computing facilities to run simulation for 10 generations.
 -   How does the centrality measure of the starting cooperator affect the simulations?
--   What happens under strong selection conditions?
--   The project initially was motivated by the fact that most of these simulations are run on "artificial" graphs rather than using empirical network data. Thererefore, I want to test my simulation on the Sampson's monk network, or the AddHealth network data.
 
-References
-----------
+References and Further Reading
+------------------------------
 
 -   *A simple rule for the evolution of cooperation on graphs and social networks*, Ohtsuki, Hauert,Liberman, Nowak, Nature **441**, 502-505, 2006
 
 -   *Crowds, and Markets: Reasoning about a Highly Connected World* By David Easley and Jon Kleinberg. Cambridge University Press, 2010.
+
+-   \_The Ubiquity of Small-World Networks, Telesford, Joyce, Hayasaka, Burdette, Laurienti, **5**, 367-375, 2001
 
 -   *Social games in Social networks*, Abramson, Kuperman.
 

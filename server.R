@@ -10,6 +10,8 @@ cycle = make_ring(n)
 lattice = make_lattice(c(5,4))
 regular = sample_k_regular(n, 10, directed = F, multiple = FALSE)
 scaleFree = barabasi.game(n, directed = F)
+smallWorld = sample_smallworld(1, n, 2, 0.1, loops = FALSE, multiple = FALSE)
+
 
 
 shinyServer(
@@ -19,8 +21,9 @@ shinyServer(
     net = switch(input$chosenNet,
                  "Cycle" = cycle,
                  "Lattice"= lattice,
-                 "Regular" = regular,
-                 "Scale Free" =scaleFree)
+                 "Regular K = 10" = regular,
+                 "Scale Free mean k = 2" =scaleFree,
+                 "Small World mean k =4" = smallWorld)
     if(input$multStart == T){
       netBefore = assignTypeMult(net)
     }
@@ -35,7 +38,7 @@ shinyServer(
   output$networkBefore = renderPlot({
       netBefore = netChoice()
       lay=layout.fruchterman.reingold(netBefore)
-      plot(netBefore, main = "Network Before Death-Birth",vertex.label=NA, layout=lay)
+      plot(netBefore, main = "Network Before Death-Birth update",vertex.label=NA, layout=lay)
       
     })
     output$networkAfter = renderPlot({
@@ -45,10 +48,10 @@ shinyServer(
       c = input$cost
       lay=layout.fruchterman.reingold(netBefore)
       netBefore = netFit(netBefore, benf = b, cost = c)
-      netAfter = netUpdate(netBefore,benf=b, cost=c, 30)
+      netAfter = netUpdate(netBefore,benf=b, cost=c, 50)
       netAfter = assignColor(netAfter)
       
-      plot(netAfter, main = "Network After Death-Birth", vertex.label=NA, layout=lay)
+      plot(netAfter, main = "Network After Death-Birth update", vertex.label=NA, layout=lay)
       
     })
 
