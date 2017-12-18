@@ -63,7 +63,7 @@ To develop this simulation I wrote several functions that I describe below. The 
 -   nodeFit() : this function assigns "fitness" to each node. This characterstic is based on whether the node is a cooperator or a defector, and on the charactersitics of its neighbours. Specifically,
 
 	
-	__Fitness__ = 1- w- (benf*i - cost*k)*w.   
+	__Fitness__ = 1- w- (benf x i - cost x k) x w.   
 	benf = benefit gained from being neighbour to some cooperators. 
 	cost = cost lost from helping neighbours by being a cooperators.   
 	i = number of cooperatoring neighbours. 
