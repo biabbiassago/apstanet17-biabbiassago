@@ -31,7 +31,7 @@ In this part, I simulate 100 net-update processes at 9 different levels of b/c, 
 
 	- file: simulations.R. 
 	- folder : simfiles containing the four .csv files with 100 simulations,  
-		for 1 and 2 generations, under weak and strong selection. 
+			for 1 and 2 generations, under weak and strong selection. 
 	
 	
 __Other files in this folder__
