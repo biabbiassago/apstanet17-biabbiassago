@@ -53,7 +53,7 @@ source("./functions.R")
 set.seed(1993)
 ```
 
-### Developing the simulation
+## Developing the simulation
 
 To develop this simulation I wrote several functions that I describe below. The code can be found in this repository in functions.R.
 
@@ -132,7 +132,7 @@ plotScale4 = plot(sampleScale2,layout= lay, vertex.label=NA, main = "b/c = 1 , a
 
 ![](images/scalePlot.png)
 
-### Small World Network - simulations
+## Small World Network - simulations
 
 To understand what happens on average, and for different level of benefit-cost ratio, I ran 100 simulations for each of 9 levels of b/c, from 0 to 16. What is the maximum percentage of cooperators for each of these levels? I decided to run these simulations on a Small World Network, which is a good representation of population. The network used has 20 nodes and a mean degree k = 4.
 
@@ -140,7 +140,7 @@ I run these simulation for one and two generations, first under weak selection a
 
 The files with the simulations can be found at simfiles. 
 
-#### Weak selection
+### Weak selection
 
 ``` r
 ##Under weak selection
@@ -307,7 +307,7 @@ In this case, we see that some of the simulations have reached a full population
 
 If we disregard the case of b/c = 0, we see that from two onwards there is an increasing trend of the mean, that seems to converge at 0.25 after benefit/cost = 10. In future analysis, I intend to analyze whether this is a stable state for the specific number of generations (two).
 
-#### Under strong selection
+### Under strong selection
 
 I then run the same simulaiton but under strong selection conditions, i.e. when w = 1.
 
