@@ -1,6 +1,3 @@
-__APSTANET 17 Final Project__    
-__Bianca Brusco bb1569__
-
 
 # Using Networks to study the Evolution of Cooperation
 
